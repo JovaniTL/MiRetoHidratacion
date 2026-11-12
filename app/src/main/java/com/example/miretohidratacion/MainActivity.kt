@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MiRetohidratacionTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    PantallaHidratacionV3(modifier = Modifier.padding(innerPadding))
+                    PantallaHidratacionV4(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -60,12 +60,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun PantallaHidratacionV3(modifier: Modifier) {
-    val fondo = Color(0xFF3F51B5)
+fun PantallaHidratacionV4(modifier: Modifier) {
+    val fondo = Color(0xFF000000)
     val color1 = Color(0xFFFFC107)
     val color2 = Color(0xFFEE0000)
     val color3 = Color(0xFFFFEB3B)
-    val color4 = Color(0xFFFF0000)
+
+    val contexto = LocalContext.current
+
+    var vasos by remember { mutableIntStateOf(0) }
+    val meta = 8
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -80,7 +85,6 @@ fun PantallaHidratacionV3(modifier: Modifier) {
             color = color1
         )
         Spacer(modifier = Modifier.height(24.dp))
-
         Text(
             text = "Cada baso cuenta!!!!!",
             fontSize = 17.sp,
@@ -94,6 +98,7 @@ fun PantallaHidratacionV3(modifier: Modifier) {
             color = color3
         )
         Spacer(modifier= Modifier.height(24.dp))
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -102,7 +107,7 @@ fun PantallaHidratacionV3(modifier: Modifier) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text("META Diaria", fontSize = 12.sp, color=color2)
                 Text(
-                    text = "8 vasos",
+                    text = "$meta vasos",
                     fontSize = 35.sp,
                     fontWeight = FontWeight.Bold,
                     color = color2
@@ -119,7 +124,6 @@ fun PantallaHidratacionV3(modifier: Modifier) {
             }
         }
         Spacer(modifier= Modifier.height(42.dp))
-
         Text(
             text = "PLAN PARA HOY",
             fontSize = 14.sp,
@@ -127,7 +131,6 @@ fun PantallaHidratacionV3(modifier: Modifier) {
             color = color1
         )
         Spacer(modifier= Modifier.height(42.dp))
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -144,9 +147,69 @@ fun PantallaHidratacionV3(modifier: Modifier) {
             Text("Tarde", fontSize = 16.sp, color = color3)
             Text("3 vasos", fontSize = 16.sp, color = color1)
         }
-
+        Spacer(modifier= Modifier.height(24.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text("Noche", fontSize = 16.sp, color = color3)
+            Text("2 vasos", fontSize = 16.sp, color = color1)
+        }
+        Spacer(modifier= Modifier.height(24.dp))
+        Text(
+            text ="VASOS REGISTRADOS: $vasos ➡️ $meta",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = color1,
+            textAlign = TextAlign.Center
+        )
+        Spacer(modifier= Modifier.height(24.dp))
+        Text(
+            text = if(vasos == meta) "META ALCANZADA" else "Sigue avanzando",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = color1,
+            textAlign = TextAlign.Center
+        )
+        Spacer(modifier= Modifier.height(24.dp))
+        Button(
+            onClick = { if(vasos > 0) vasos-- },
+            enabled = vasos > 0,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = color1)
+        ) {
+            Text("DESHACER ULTIMO VASO", fontSize = 14.sp)
+        }
         Spacer(modifier= Modifier.height(24.dp))
 
+        Button(
+            onClick = {
+                makeText(
+                    contexto,
+                    "Consejo: distribuye los vasos durante el día",
+                    Toast.LENGTH_SHORT
+                ).show()
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = color1)
+        ) {
+            Text("VER CONSEJO DEL DIA")
+        }
+        Spacer(modifier= Modifier.height(24.dp))
+        Button(
+            onClick = {
+                makeText(
+                    contexto,
+                    "Tu meta es de 8 vasos diarios durante 7 dias",
+                    Toast.LENGTH_SHORT
+                ).show()
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = color1)
+        ) {
+            Text("RECORDAR MI META")
+        }
+        Spacer(modifier= Modifier.height(24.dp))
         Text(
             text = "Hoy comienza un habito saludable",
             fontSize = 15.sp,
@@ -154,4 +217,5 @@ fun PantallaHidratacionV3(modifier: Modifier) {
             textAlign = TextAlign.Center
         )
     }
+
 }
