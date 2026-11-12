@@ -52,24 +52,25 @@ class MainActivity : ComponentActivity() {
         setContent {
             MiRetohidratacionTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    PantallaHidratacionV4(modifier = Modifier.padding(innerPadding))
+                    PantallaHidratacionV5(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
     }
 }
 
+
 @Composable
-fun PantallaHidratacionV4(modifier: Modifier) {
-    val fondo = Color(0xFF000000)
-    val color1 = Color(0xFFFFC107)
-    val color2 = Color(0xFFEE0000)
-    val color3 = Color(0xFFFFEB3B)
+fun PantallaHidratacionV5(modifier: Modifier) {
 
+    val fondo = Color(0xFF0F172A)
+    val color1 = Color(0xFF38BDF8)
+    val color2 = Color(0xFF7DD3FC)
+    val color3 = Color(0xFF1E293B)
+    val colorBoton = Color(0xFF06B6D4)
     val contexto = LocalContext.current
-
     var vasos by remember { mutableIntStateOf(0) }
-    val meta = 8
+    var meta by remember { mutableIntStateOf(8) }
 
     Column(
         modifier = modifier
@@ -79,128 +80,210 @@ fun PantallaHidratacionV4(modifier: Modifier) {
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         Text(
-            text ="Mi reto de Hidratación",
-            fontSize = 17.sp,
-            color = color1
+            text = "Mi reto de Hidratación",
+            fontSize = 32.sp,
+            textAlign = TextAlign.Center,
+            color = color1,
+            fontWeight = FontWeight.ExtraBold
         )
-        Spacer(modifier = Modifier.height(24.dp))
+
+        Spacer(modifier = Modifier.height(10.dp))
+
         Text(
-            text = "Cada baso cuenta!!!!!",
+            text = "Cada vaso cuenta",
             fontSize = 17.sp,
             color = color2
         )
-        Spacer(modifier= Modifier.height(38.dp))
-        Text(
-            text = "TU DESAFIO SEMANAL",
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold,
-            color = color3
-        )
-        Spacer(modifier= Modifier.height(24.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
+        Spacer(modifier = Modifier.height(15.dp))
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    color3,
+                    RoundedCornerShape(16.dp)
+                )
+                .padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("META Diaria", fontSize = 12.sp, color=color2)
-                Text(
-                    text = "$meta vasos",
-                    fontSize = 35.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = color2
-                )
-            }
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Duración", fontSize = 12.sp, color=color2)
-                Text(
-                    text = "7 DIAS",
-                    fontSize = 35.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = color2
-                )
+
+            Text(
+                text = "CONFIGURA TU META",
+                fontSize = 14.sp,
+                color = color1,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Button(
+                    onClick = {if (meta > 0) meta--},
+                    enabled = meta > 0,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorBoton
+                    )
+                ) {
+                    Text("-", color = Color.White)
+                }
+
+                Spacer(modifier = Modifier.width(30.dp))
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    Text(
+                        text = "$meta VASOS",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+
+                    Text(
+                        text = "Meta diaria",
+                        fontSize = 12.sp,
+                        color = color2
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(30.dp))
+
+                Button(
+                    onClick = {meta++},
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colorBoton
+                    )
+                ) {
+                    Text("+", color = Color.White)
+                }
             }
         }
-        Spacer(modifier= Modifier.height(42.dp))
+
+        Spacer(modifier = Modifier.height(32.dp))
+
         Text(
-            text = "PLAN PARA HOY",
-            fontSize = 14.sp,
+            text = "TU DESAFÍO SEMANAL",
+            fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             color = color1
         )
-        Spacer(modifier= Modifier.height(42.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text("Mañana", fontSize = 16.sp, color = color3)
-            Text("3 vasos", fontSize = 16.sp, color = color3)
-        }
-        Spacer(modifier= Modifier.height(15.dp))
+
+        Spacer(modifier = Modifier.height(24.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Text("Tarde", fontSize = 16.sp, color = color3)
-            Text("3 vasos", fontSize = 16.sp, color = color1)
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                Text(
+                    "Meta diaria",
+                    color = color2
+                )
+
+                Text(
+                    "${meta} vasos",
+                    fontSize = 35.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+            }
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                Text(
+                    "Duración",
+                    color = color2
+                )
+
+                Text(
+                    "7 días",
+                    fontSize = 35.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+            }
         }
-        Spacer(modifier= Modifier.height(24.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text("Noche", fontSize = 16.sp, color = color3)
-            Text("2 vasos", fontSize = 16.sp, color = color1)
-        }
-        Spacer(modifier= Modifier.height(24.dp))
+
+        Spacer(modifier = Modifier.height(32.dp))
+
         Text(
-            text ="VASOS REGISTRADOS: $vasos ➡️ $meta",
+            text = "VASOS REGISTRADOS: $vasos ➜ $meta",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            color = color1,
-            textAlign = TextAlign.Center
+            color = color1
         )
-        Spacer(modifier= Modifier.height(24.dp))
-        Text(
-            text = if(vasos == meta) "META ALCANZADA" else "Sigue avanzando",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        LinearProgressIndicator(
+            progress = { vasos.toFloat() / meta.toFloat() },
+            modifier = Modifier.fillMaxWidth().height(20.dp),
+
             color = color1,
-            textAlign = TextAlign.Center
+            trackColor = Color(0xFF475569)
         )
-        Spacer(modifier= Modifier.height(24.dp))
+
+        Spacer(modifier = Modifier.height(24.dp))
+
         Button(
-            onClick = { if(vasos > 0) vasos-- },
+            onClick = { if (vasos < meta) vasos++ },
+            enabled = vasos < meta,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colorBoton
+            )
+        ) {
+            Text(
+                "REGISTRAR UN VASO",
+                color = Color.White
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { if (vasos > 0) vasos-- },
             enabled = vasos > 0,
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = color1)
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colorBoton
+            )
         ) {
-            Text("DESHACER ULTIMO VASO", fontSize = 14.sp)
+            Text(
+                "DESHACER ÚLTIMO VASO",
+                color = Color.White
+            )
         }
-        Spacer(modifier= Modifier.height(24.dp))
 
-        Button(
-            onClick = {
-                makeText(
-                    contexto,
-                    "Consejo: distribuye los vasos durante el día",
-                    Toast.LENGTH_SHORT
-                ).show()
-            },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = color1)
-        ) {
-            Text("VER CONSEJO DEL DIA")
-        }
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = if (vasos == meta)
+                "🎉 ¡Meta alcanzada!"
+            else
+                "Sigue avanzando, vaso a vaso",
+            color = color2,
+            textAlign = TextAlign.Center
+        )
         Spacer(modifier= Modifier.height(24.dp))
         Button(
             onClick = {
                 makeText(
                     contexto,
-                    "Tu meta es de 8 vasos diarios durante 7 dias",
+                    "Tu meta es de ${meta} vasos diarios durante 7 dias",
                     Toast.LENGTH_SHORT
                 ).show()
             },
@@ -217,5 +300,4 @@ fun PantallaHidratacionV4(modifier: Modifier) {
             textAlign = TextAlign.Center
         )
     }
-
 }
