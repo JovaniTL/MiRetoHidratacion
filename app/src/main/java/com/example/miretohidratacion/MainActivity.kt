@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MiRetohidratacionTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    PantallaHidratacionV2(modifier = Modifier.padding(innerPadding))
+                    PantallaHidratacionV3(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -60,13 +60,18 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun PantallaHidratacionV2(modifier: Modifier) {
-    val fondo = Color(0xFFFFC107)
-    val color1 = Color(0xFF008DFF)
-    val color2 = Color(0xFF00EE0B)
-    val color3 = Color(0xFF03A9F4)
+fun PantallaHidratacionV3(modifier: Modifier) {
+    val fondo = Color(0xFF3F51B5)
+    val color1 = Color(0xFFFFC107)
+    val color2 = Color(0xFFEE0000)
+    val color3 = Color(0xFFFFEB3B)
+    val color4 = Color(0xFFFF0000)
     Column(
-        modifier = modifier.fillMaxSize().systemBarsPadding().padding(24.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .background(fondo)
+            .verticalScroll(rememberScrollState())
+            .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -81,24 +86,71 @@ fun PantallaHidratacionV2(modifier: Modifier) {
             fontSize = 17.sp,
             color = color2
         )
-        Spacer(modifier= Modifier.height(24.dp))
+        Spacer(modifier= Modifier.height(38.dp))
         Text(
-            text = "Mi Meta diaria",
-            fontSize = 15.sp,
-            fontWeight = FontWeight.Medium,
+            text = "TU DESAFIO SEMANAL",
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
             color = color3
         )
-        Text(
-            text = "8 vasos",
-            fontSize = 48.sp,
-            fontWeight = FontWeight.Bold,
-            color = color2
-        )
         Spacer(modifier= Modifier.height(24.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text("META Diaria", fontSize = 12.sp, color=color2)
+                Text(
+                    text = "8 vasos",
+                    fontSize = 35.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = color2
+                )
+            }
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text("Duración", fontSize = 12.sp, color=color2)
+                Text(
+                    text = "7 DIAS",
+                    fontSize = 35.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = color2
+                )
+            }
+        }
+        Spacer(modifier= Modifier.height(42.dp))
+
+        Text(
+            text = "PLAN PARA HOY",
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            color = color1
+        )
+        Spacer(modifier= Modifier.height(42.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text("Mañana", fontSize = 16.sp, color = color3)
+            Text("3 vasos", fontSize = 16.sp, color = color3)
+        }
+        Spacer(modifier= Modifier.height(15.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text("Tarde", fontSize = 16.sp, color = color3)
+            Text("3 vasos", fontSize = 16.sp, color = color1)
+        }
+
+        Spacer(modifier= Modifier.height(24.dp))
+
         Text(
             text = "Hoy comienza un habito saludable",
-            fontSize = 16.sp,
-            color = color3,
+            fontSize = 15.sp,
+            color = color2,
             textAlign = TextAlign.Center
         )
     }
